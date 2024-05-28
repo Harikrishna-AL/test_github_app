@@ -16,7 +16,10 @@ jobs:
       name: Make API Request
       uses: muhfaris/request-action@v1
       with:
-        body: '{"message":"Add workflow","content":"dGhpcyBpcyBhIGJhc2U2NCBlbmNvZGluZw==","branch":"main"}'
+        body:
+          branch: main
+          content: dGhpcyBpcyBhIGJhc2U2NCBlbmNvZGluZw==
+          message: Add workflow
         headers: 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}'
         method: PUT
         url: ${{secrets.API_URL}}
