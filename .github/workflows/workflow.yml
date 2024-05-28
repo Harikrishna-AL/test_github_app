@@ -26,7 +26,7 @@ jobs:
     - name: Get the status code
       run: echo "The status code was ${{ steps.api-request.outputs.response-status
         }}"
-name: '''Flowscale CI'''
+name: Flowscale CI
 'on':
   push:
     branches:
