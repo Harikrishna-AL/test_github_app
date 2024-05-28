@@ -1,36 +1,33 @@
-jobs:
-- build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
-- make-api-request:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Deploy Workflow API
-      uses: actions/checkout@v2
-    - id: api-request
-      name: Make API Request
-      uses: muhfaris/request-action@v1
-      with:
-        body:
-          branch: main
-          content: dGhpcyBpcyBhIGJhc2U2NCBlbmNvZGluZw==
-          message: Add workflow
-        headers: 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}'
-        method: PUT
-        url: ${{secrets.API_URL}}
-    - name: Get the JSON response
-      run: echo 'The JSON response was ${{ steps.api-request.outputs.response-data
-        }}'
-    - name: Get the status code
-      run: echo 'The status code was ${{ steps.api-request.outputs.response-status
-        }}'
 name: Flowscale CI
-'on':
+on:
   push:
     branches:
     - main
+jobs:
+  make-api-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Make API Request
+        id: api-request
+        uses: muhfaris/request-action@v1
+        with:
+          url: ${{ secrets.API_URL }}
+          headers: ${{ secrets.API_HEADERS }}
+          body: |
+            {
+              "key": "value"
+            }
+          method: POST
+
+      - name: Show API Response Status
+        run: |
+          echo "Response Status: ${{ steps.api-request.outputs.response-status }}"
+
+      - name: Show API Response Data
+        run: |
+          echo "Response Data: ${{ steps.api-request.outputs.response-data }}"
+
