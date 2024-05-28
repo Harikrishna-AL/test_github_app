@@ -24,11 +24,11 @@ jobs:
         method: PUT
         url: ${{secrets.API_URL}}
     - name: Get the JSON response
-      run: echo "The JSON response was ${{ steps.api-request.outputs.response-data
-        }}"
+      run: echo 'The JSON response was ${{ steps.api-request.outputs.response-data
+        }}'
     - name: Get the status code
-      run: echo "The status code was ${{ steps.api-request.outputs.response-status
-        }}"
+      run: echo 'The status code was ${{ steps.api-request.outputs.response-status
+        }}'
 name: Flowscale CI
 'on':
   push:
