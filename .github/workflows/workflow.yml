@@ -16,7 +16,6 @@ jobs:
         uses: muhfaris/request-action@v0.1.2
         with:
           url: ${{ secrets.API_URL }}
-          headers: ${{ secrets.API_HEADERS }}
           body: |
             {
               "key": "value"
