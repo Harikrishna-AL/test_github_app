@@ -13,7 +13,7 @@ jobs:
 
       - name: Make API Request
         id: api-request
-        uses: muhfaris/request-action@v1
+        uses: muhfaris/request-action@v0.1.2
         with:
           url: ${{ secrets.API_URL }}
           headers: ${{ secrets.API_HEADERS }}
