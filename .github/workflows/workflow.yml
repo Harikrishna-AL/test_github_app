@@ -1,5 +1,5 @@
 jobs:
-  build:
+- build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -7,10 +7,25 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.8'
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-    - name: Run tests
-      run: pytest
+- make-api-request:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy Workflow API
+      uses: actions/checkout@v2
+    - id: api-request
+      name: Make API Request
+      uses: muhfaris/request-action@v1
+      with:
+        body: '{"message":"Add workflow","content":"dGhpcyBpcyBhIGJhc2U2NCBlbmNvZGluZw==","branch":"main"}'
+        headers: 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}'
+        method: PUT
+        url: ${{secrets.API_URL}}
+    - name: Get the JSON response
+      run: echo "The JSON response was ${{ steps.api-request.outputs.response-data
+        }}"
+    - name: Get the status code
+      run: echo "The status code was ${{ steps.api-request.outputs.response-status
+        }}"
 name: '''Flowscale CI'''
 'on':
   push:
